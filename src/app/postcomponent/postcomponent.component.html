@@ -23,13 +23,17 @@
       <tr *ngFor="let task of tasks.tasks;">
         <td> {{task.uid}} </td>   
         <td contenteditable='true' (input)="onRowClick($event, task.uid)"> {{task.taskname}}
-
+          
           <!-- <input type="text" name="txtTaskName" value="{{task.taskname}}" [readonly]="!showText">   
             <input  [hidden]="!edited" type="image" src="assets/okbtn.png" height="15px" width="18px">
             <a href="#" [hidden]="pencilHide" (click)="showText=!showText; edited = !edited; pencilHide=!pencilHide;"><span class="glyphicon glyphicon-pencil"></span></a>
             <input type="image" src="assets/trash_can.png" height="15px" width="18px">
             <a href="#"  [hidden]="!edited" (click)="pencilHide=!pencilHide; edited=!edited;"><span class="glyphicon glyphicon-remove"></span></a> -->
-        </td>
+        </td> 
+        <button  (click)="updatePost(task)"
+        class="btn btn-default btn-sm">Update</button>
+        <button  (click)="deletePost(task)"
+        class="btn btn-default btn-sm">Delete</button>
       </tr>
     </tbody>
 </table>
