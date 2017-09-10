@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Http} from '@angular/http';
+import {Http, Headers, RequestOptions} from '@angular/http';
 @Component({
   selector: 'app-postcomponent',
   templateUrl: './postcomponent.component.html',
@@ -10,6 +10,8 @@ export class PostcomponentComponent  {
   tasks: any[];
   valuetobeUpdated;
   idOfValuetobeUpdated;
+  
+
   constructor(private http:Http) {
     http.get('http://localhost:5000/items')
       .subscribe(response=>{
@@ -18,19 +20,14 @@ export class PostcomponentComponent  {
       });
       }
 
-      
-
       onRowClick(event, id){
           console.log(event.target.outerText, id);
           this.valuetobeUpdated = event.target.outerText;
           this.idOfValuetobeUpdated = id;
       }
 
-
   createPost(task : HTMLInputElement){
-    
-    let post = {taskname:task.value};
-    
+    let post = {taskname:task.value};    
     this.http.post('http://127.0.0.1:5000/item/'+task.value,JSON.stringify(post))
     .subscribe(response=>{  
      console.log(response);
@@ -41,8 +38,10 @@ export class PostcomponentComponent  {
 
   updatePost(post){
     alert(this.valuetobeUpdated);
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
     let updateMe = {uid:this.idOfValuetobeUpdated, newTask:this.valuetobeUpdated};
-    this.http.put('http://127.0.0.1:5000/item/'+post.taskname,JSON.stringify(updateMe))
+    this.http.put('http://127.0.0.1:5000/item/'+post.taskname,JSON.stringify(updateMe),options)
     .subscribe(response=>{
       console.log(response);
     });
