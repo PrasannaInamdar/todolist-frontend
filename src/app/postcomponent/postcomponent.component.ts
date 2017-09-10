@@ -15,17 +15,17 @@ export class PostcomponentComponent  {
       .subscribe(response=>{
         console.log(response.json());
         this.tasks = response.json();
-      })
+      });
       }
+
+      
+
       onRowClick(event, id){
           console.log(event.target.outerText, id);
           this.valuetobeUpdated = event.target.outerText;
           this.idOfValuetobeUpdated = id;
       }
 
-      editBtnClicked(){
-        alert();
-   }
 
   createPost(task : HTMLInputElement){
     
@@ -33,11 +33,10 @@ export class PostcomponentComponent  {
     
     this.http.post('http://127.0.0.1:5000/item/'+task.value,JSON.stringify(post))
     .subscribe(response=>{  
-      this.http.get('http://localhost:5000/items').subscribe(response=>{
-        this.tasks = response.json();
-      });
+     console.log(response);
     });
     task.value='';  
+    location.reload();
   }
 
   updatePost(post){
@@ -47,15 +46,15 @@ export class PostcomponentComponent  {
     .subscribe(response=>{
       console.log(response);
     });
+    location.reload();
   }
 
   deletePost(post){
     this.http.delete('http://127.0.0.1:5000/item/'+post.taskname)
     .subscribe(response=>{
-      this.http.get('http://127.0.0.1:5000/items').subscribe(response=>{
-        this.tasks = response.json();
-      });
+      console.log(response);
     });
+    location.reload();
   }
   
 
